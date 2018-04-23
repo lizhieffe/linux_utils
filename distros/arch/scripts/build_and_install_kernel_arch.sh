@@ -4,7 +4,11 @@
 # Useage:
 #	if '-c' is present, clean before compile.
 
-KERNEL_DIR="/root/development/linux"
+KERNEL_DIR="/home/lizhieffe/development/linux"
+CONFIG_FILE=".config"
+KERNEL_NAME="linux-custom"
+CORES=`getconf _NPROCESSORS_ONLN`
+
 echo "Going to kernel directory: ${KERNEL_DIR}"
 cd "$KERNEL_DIR"
 
@@ -15,16 +19,12 @@ if [ "$#" -ne 1 ] && [ "$1" = "-c" ]; then
 	make clean
 fi
 
-CONFIG_FILE=".config"
 if [ -f "${CONFIG_FILE}" ]; then
 	echo "Deleting existing ${CONFIG_FILE} file"
 	rm .config
 fi
 echo "Generating new ${CONFIG_FILE} file"
 zcat /proc/config.gz > "${CONFIG_FILE}"
-
-KERNEL_NAME="linux-custom"
-CORES=`getconf _NPROCESSORS_ONLN`
 
 echo "Compiling the kernel with name ${KERNEL_NAME} using ${CORES} cores..."
 make -j "$CORES" LOCALVERSION=-"$KERNEL_NAME"
