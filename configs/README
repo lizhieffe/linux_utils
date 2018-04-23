@@ -1,0 +1,15 @@
+This is my vimrc files.
+
+Reference:
+
+1. Build vim from source. This is recomended for YouCompleteMe.
+https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+
+For RPi, use this doc instead.
+https://www.solarianprogrammer.com/2016/09/24/raspberry-pi-raspbian-building-installing-vim-8/
+
+2. For YCM usage, read the User Guild section of
+https://valloric.github.io/YouCompleteMe/#general-usage
+
+2. For Ctags. See usage:
+https://andrew.stwrt.ca/posts/vim-ctags/

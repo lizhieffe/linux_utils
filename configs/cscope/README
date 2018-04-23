@@ -1,0 +1,46 @@
+## To use cscope in vim
+
+- install cscope (sudo apt-get install cscope)
+
+- copy the cscope_maps.vim file to ~/.vim/plugin folder
+
+- modify the ~/.vimrc file and add the following line to enable cscope plugin
+```
+Plugin 'cscope.vim'
+```
+
+- copy the following script to ~/.bashrc (or similar file)
+```
+###############################
+# for cscope
+function build_cscope_db_func()
+{
+  find $PWD/ -name *.c \
+         -o -name *.h \
+         -o -name *.mk \
+         -o -name *.xml\
+         -o -name *.cfg\
+         -o -name *.ini\
+         -o -name *.dat\
+         -o -name *.cc\
+         -o -name *.cpp > $PWD/cscope.files
+  cscope -RCbk
+  export CSCOPE_DB=$PWD/cscope.out
+}
+# Usage: run this command in the source code folder, and open files from
+e
+# using vim.
+alias csbuild=build_cscope_db_func
+
+function cscope_export_db_func()
+{
+  export CSCOPE_DB=$PWD/cscope.out
+}
+alias csexport=cscope_export_db_func
+###############################
+```
+
+- in the source code folder, run `csbuild` to generate the cscope metadata
+  files.
+- from the same folder, open your source code files. Now the cscope should be
+  enabled.
