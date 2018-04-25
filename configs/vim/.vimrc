@@ -95,14 +95,7 @@ Plugin 'altercation/vim-colors-solarized'
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-easytags'
 Plugin 'mhinz/vim-signify'
-" Display cscope search result in list view using quickfix by default.
-Plugin 'ronakg/quickr-cscope.vim'
 
-" Use quickfix to show certain types of cscope search result.
-set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-
-Plugin 'ronakg/quickr-cscope.vim'
-let g:quickr_cscope_use_qf_g = 1
 
 
 "
@@ -123,12 +116,16 @@ Plugin 'majutsushi/tagbar'
 nmap <Leader>t :TagbarToggle<CR>
 
 
-
 "
-" Cscope
+" Cscope config
 "
 Plugin 'cscope.vim'
-nmap <Leader>n :cn<CR>
+" Cscope results navigation using quickfix window.
+Plugin 'ronakg/quickr-cscope.vim'
+" Use quickfix to show certain types of cscope search result. It also enables
+" search under cursor by <Leader>+s/c/d/i/t/e/a/g
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+let g:quickr_cscope_use_qf_g = 1
 
 
 " ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
