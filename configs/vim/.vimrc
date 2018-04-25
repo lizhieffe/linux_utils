@@ -4,9 +4,7 @@
 " TODO: consider to use `au BufEnter ...` to load different .lvimrc file when
 " opening different files, similar to the case loading cscope db.
 let lvimrc = findfile(".lvimrc", ".;")
-echo lvimrc
 if (!empty(lvimrc))
-  echo "loading lvimrc..."
   exe ":so " . lvimrc
 endif
 
