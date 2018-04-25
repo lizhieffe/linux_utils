@@ -8,14 +8,33 @@ systemctl start dhcpcd.service    # start wired network connection now
 // Dev tools
 pacman -S base-devel git bc xmlto docbook-xsl kmod inetutils # install core development package, e.g., make, gcc
 // Utils
-pacman -S git bash-completion openssh
+pacman -S git bash-completion openssh wget
+
 // python2
 pacman -S python2
 // c/c++ tools
 pacman -S ctags cscope
+
 // To kill xserver, Ctrl+Alt+F1
 pacman -S xorg-server xorg-xmodmap xorg-xinit xterm
+
 // Install tmux-bash-completion AUR
+
+/ *
+  * fzf
+  */
+pacman -S fzf
+// Add these in the .bash_profile
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+
+/ *
+  * cscope
+  */
+pacman -S cscope
+// Then follow the arch doc for vim+cscope to set up.
+
+```
 ```
 
 ### Create user account
