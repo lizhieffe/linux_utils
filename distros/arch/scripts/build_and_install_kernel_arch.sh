@@ -4,6 +4,9 @@
 # Useage:
 #	if '-c' is present, clean before compile.
 
+# Exit on error.
+set -e
+
 KERNEL_DIR="/home/lizhieffe/development/linux"
 CONFIG_FILE=".config"
 KERNEL_NAME="linux-custom"
