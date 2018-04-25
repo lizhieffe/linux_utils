@@ -103,14 +103,6 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 Plugin 'ronakg/quickr-cscope.vim'
 let g:quickr_cscope_use_qf_g = 1
-nmap <Leader>s <plug>(quickr_cscope_symbols)
-nmap <S-g> <plug>(quickr_cscope_global)
-nmap <S-c> <plug>(quickr_cscope_callers)
-nmap <S-f> <plug>(quickr_cscope_files)
-nmap <S-i> <plug>(quickr_cscope_includes)
-nmap <S-t> <plug>(quickr_cscope_text)
-nmap <S-e> <plug>(quickr_cscope_egrep)
-nmap <S-d> <plug>(quickr_cscope_functions)
 
 
 "
@@ -429,4 +421,4 @@ else
   let FILE_SEARCH_PATH = $HOME
 endif
 execute "cnoreabbrev fl FZF ".FILE_SEARCH_PATH
-nmap <Leader>f :fl<CR>
+nmap <Leader>ff :fl<CR>
