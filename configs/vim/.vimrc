@@ -420,3 +420,10 @@ else
 endif
 execute "cnoreabbrev fl FZF ".FILE_SEARCH_PATH
 nmap <Leader>ff :fl<CR>
+
+"
+" QFEnter, which open item from QuickFix on any location you want.
+"
+" <Leader><Enter>: open in new vertical split
+" <Leader><Tab>: open in new tab
+Plugin 'yssl/QFEnter'
