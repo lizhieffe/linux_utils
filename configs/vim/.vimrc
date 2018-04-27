@@ -7,6 +7,10 @@ let lvimrc = findfile(".lvimrc", ".;")
 if (!empty(lvimrc))
   exe ":so " . lvimrc
 endif
+if exists("FILE_SEARCH_PATH")
+else
+  let FILE_SEARCH_PATH = $HOME
+endif
 
 
 set nocompatible
@@ -90,8 +94,8 @@ Plugin 'mhinz/vim-signify'
 "
 Plugin 'rking/ag.vim'
 " abbrev al for AG search in libassistant
-" cnoreabbrev al Ag /usr/local/google/home/lizhi/eurekasource/chromium/src/libassistant<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-cnoreabbrev al Ag /usr/local/google/home/lizhi/eurekasource/chromium/src/libassistant<HOME><Right><Right>
+" cnoreabbrev al Ag /usr/local/google/home/lizhi/eurekasource/chromium/src/libassistant<HOME><Right><Right>
+execute "cnoreabbrev al Ag ".FILE_SEARCH_PATH"<HOME><Right><Right>"
 nmap <Leader>h :al<SPACE>
 
 
@@ -414,10 +418,6 @@ endif
 " set the runtime path to include fzf, a file fuzzy searcher.
 " fzf requires to install in system first using git.
 set rtp+=~/.fzf
-if exists("FILE_SEARCH_PATH")
-else
-  let FILE_SEARCH_PATH = $HOME
-endif
 execute "cnoreabbrev fl FZF ".FILE_SEARCH_PATH
 nmap <Leader>ff :fl<CR>
 

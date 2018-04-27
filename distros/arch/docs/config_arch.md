@@ -8,7 +8,7 @@ systemctl start dhcpcd.service    # start wired network connection now
 // Dev tools
 pacman -S base-devel git bc xmlto docbook-xsl kmod inetutils # install core development package, e.g., make, gcc
 // Utils
-pacman -S git bash-completion openssh wget
+pacman -S git bash-completion openssh wget the_silver_searcher
 
 // python2
 pacman -S python2
