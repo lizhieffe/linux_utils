@@ -7,13 +7,14 @@ Follow this doc: https://wiki.archlinux.org/index.php/installation_guide
 I prefer to use fdisk to do the partition.
 
 1. `fdisk /dev/sdX`
-2. Create partition with 1G size, which will be used as EFI.  /dev/sdX1
-3. Create partition with 8G size, which will be used as swap. /dev/sdX2
-4. Create partition with the rest, which will be the linux system.  /dev/sdX3
-5. Set partition 1 to EFI type: `t->1->1`
-6. Set partition 2 to swap type: `t->2->19`
-7. Set partition 1 to system type: `t->3->24`
-8. Save and quit fdisk: `w`
+2. 'g' to treate a new empty GPT partition table
+3. Create partition with 1G size, which will be used as EFI.  /dev/sdX1
+4. Create partition with 8G size, which will be used as swap. /dev/sdX2
+5. Create partition with the rest, which will be the linux system.  /dev/sdX3
+6. Set partition 1 to EFI type: `t->1->1`
+7. Set partition 2 to swap type: `t->2->19`
+8. Set partition 1 to system type: `t->3->24`
+9. Save and quit fdisk: `w`
 
 After partition is done, here we go on with format.
 
