@@ -22,6 +22,20 @@ After partition is done, here we go on with format.
 2. `mkswap /dev/sdX2`, `swapon /dev/sdX2`
 3. `mkfs.ext4 /dev/sdX3`
 
+### Install Arch as Dual System with another Linux Distro
+
+Here we talk about Ubuntu+Arch
+1. Install Ubuntu first. We would like to use Ubuntu's grub to manage Arch. (It is illegal to have 2 grub installed on one machine).
+2. Follow the regular steps to install Arch. Skip the step to install grub.
+3. Don't restart after Arch install finishes.
+4. `exit` to quit the Arch root.
+5. `fdisk -l` and find the disk have Ubuntu install.
+6. `mount /dev/sdXN /mnt` and `arch-chroot /mnt` to root to Ubuntu install disk.
+7. `export PATH="/bin:/usr/sbin:$PATH"`
+8. `update-grub`
+9. `exit`
+10. Reboot your system and the dual system should be ready.
+
 ### The boot option doesn't show in UEFI
 
 Try to update the motherboard's bios.
