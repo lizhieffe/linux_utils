@@ -1,5 +1,16 @@
 ## Must do after fresh install
 
+### Create user account
+
+1. First login as root
+2. Create new user account: `useradd -m USER_NAME`
+3. Create password: `passwd USER_NAME`
+4. Give permission: `visudo -f /etc/sudoers` and add this line `USER_NAME ALL=(ALL) ALL`
+5. Exit root login by `exit` and login as new user.
+``` 
+
+See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](https://wiki.archlinux.org/index.php/sudo) doc for more details.
+
 ### Install softwares
 
 ```
@@ -36,17 +47,3 @@ pacman -S cscope
 
 ```
 ```
-
-### Create user account
-
-- Create the new user account: 
-- Add sudo permission to the new account:
-
-1. First login as root
-2. Create new user account: `useradd -m USER_NAME`
-3. Create password: `passwd USER_NAME`
-4. Give permission: `visudo -f /etc/sudoers` and add this line `USER_NAME ALL=(ALL) ALL`
-5. Exit root login by `exit` and login as new user.
-``` 
-
-See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](https://wiki.archlinux.org/index.php/sudo) doc for more details.
