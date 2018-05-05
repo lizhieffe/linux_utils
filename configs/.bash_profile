@@ -25,7 +25,7 @@ export PATH=$PATH:~/scripts
 export EDITOR="subl -w"
 
 # Add binaries installed via Homebrew to our PATH.
-export PATH=$HOME/homebrew/bin:$PATH
+export PATH=$HOME/homebrew/bin:$HOME/development/linux_utils/scripts:$HOME/development/distros/arch/scripts:$PATH
 
 # Create and enter a directory
 function mkcd () { mkdir -p "$@" && cd "$@"; }
