@@ -36,6 +36,9 @@ Here we talk about Ubuntu+Arch
 9. `exit`
 10. Reboot your system and the dual system should be ready.
 
+Alternative:
+After step 3, reboot system to Ubuntun, and run `sudo update-grub`.
+
 ### The boot option doesn't show in UEFI
 
 Try to update the motherboard's bios.
