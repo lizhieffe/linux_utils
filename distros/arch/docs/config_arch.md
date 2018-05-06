@@ -28,6 +28,7 @@ sudo pacman -Syu --noconfirm gnome gnome-extra
 pacman -Syyu  // Update arch
 sudo systemctl enable gdm
 sudo reboot
+// Install google-chrome AUR
 
 // Install tmux-bash-completion AUR
 
