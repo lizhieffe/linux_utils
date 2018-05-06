@@ -33,6 +33,7 @@ sudo reboot
 1. Install google-chrome AUR
 2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
 3. In Chrome "Adavanced Font Settings", chosse Script as "Simplified Han", and select Standard as "Source Han Sans CN"
+4. Install Chinese input: https://medium.com/@slmeng/how-to-install-chinese-fonts-and-input-method-in-arch-linux-18b68d2817e7
 
 // Install tmux-bash-completion AUR
 
