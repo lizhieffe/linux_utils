@@ -23,11 +23,10 @@ pacman -S git bash-completion openssh wget the_silver_searcher
 // c/c++ tools
 pacman -S ctags cscope
 
-// To kill xserver, Ctrl+Alt+F1
-pacman -Sy xorg xorg-server xorg-server-utils xorg-xmodmap xorg-xinit xterm
+sudo pacman -Syu --noconfirm gnome gnome-extra
 pacman -Syyu  // Update arch
-
-pacman -Sy gnome gnome-extra
+sudo systemctl enable gdm
+sudo reboot
 
 // Install tmux-bash-completion AUR
 
