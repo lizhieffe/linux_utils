@@ -46,7 +46,7 @@ export XMODIFIERS=@im=fcitx
 5. Enjoy (Ctrl + Space is to switch input)
 
 // Install tmux-bash-completion AUR
-// Install android-studio AUR
+// Install android-studio AUR. The studio has SDK manager to automatically download SDK API for you.
 
 / *
   * fzf
