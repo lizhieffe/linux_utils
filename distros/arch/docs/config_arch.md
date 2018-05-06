@@ -32,8 +32,9 @@ sudo reboot
 // Chrome (if gnome or other UI is installed)
 1. Install google-chrome AUR
 2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
-3. In Chrome "Adavanced Font Settings", chosse Script as "Simplified Han", and select Standard as "Source Han Sans CN"
-4. Install Chinese input: https://medium.com/@slmeng/how-to-install-chinese-fonts-and-input-method-in-arch-linux-18b68d2817e7
+3. sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese
+4. In Chrome setting "Customize fonts" page, select "Source Han Sans CN" for all fonts.
+5. Install Chinese input: https://medium.com/@slmeng/how-to-install-chinese-fonts-and-input-method-in-arch-linux-18b68d2817e7
 
 // Install tmux-bash-completion AUR
 
