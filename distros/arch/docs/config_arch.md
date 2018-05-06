@@ -23,6 +23,7 @@ pacman -S git bash-completion openssh wget the_silver_searcher
 // c/c++ tools
 pacman -S ctags cscope
 
+// gnome
 sudo pacman -Syu --noconfirm gnome gnome-extra
 pacman -Syyu  // Update arch
 sudo systemctl enable gdm
