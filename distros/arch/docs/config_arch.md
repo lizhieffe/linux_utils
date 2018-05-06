@@ -16,9 +16,10 @@ See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](htt
 systemctl enable dhcpcd.service   # enable wired network connection on bootup
 systemctl start dhcpcd.service    # start wired network connection now
 // Dev tools
-pacman -S base-devel git bc xmlto docbook-xsl kmod inetutils python2 vim # install core development package, e.g., make, gcc
+pacman -S base-devel git bc xmlto docbook-xsl kmod inetutils python2 vim  // install core development package, e.g., make, gcc
 // Utils
 pacman -S git bash-completion openssh wget the_silver_searcher
+// Install AUR vundle-git
 
 // c/c++ tools
 pacman -S ctags cscope
