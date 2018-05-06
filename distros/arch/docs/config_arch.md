@@ -34,7 +34,16 @@ sudo reboot
 2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
 3. sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese
 4. In Chrome setting "Customize fonts" page, select "Source Han Sans CN" for all fonts.
-5. Install Chinese input: https://medium.com/@slmeng/how-to-install-chinese-fonts-and-input-method-in-arch-linux-18b68d2817e7
+
+// Install Chinese Input
+1. sudo pacman -Syu fcitx fcitx-googlepinyin fcitx-im fcitx-configtool
+2. Edit ~/.xprofile
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+3. Logout and then login
+4. Launch Fcitx Config GUI from contrl center, add Google Pinyin.
+5. Enjoy (Ctrl + Space is to switch input)
 
 // Install tmux-bash-completion AUR
 
