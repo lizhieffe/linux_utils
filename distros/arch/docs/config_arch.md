@@ -35,7 +35,7 @@ sudo reboot
 / *
   * fzf
   */
-pacman -S fzf
+pacman -Syu fzf
 // Add these in the .bash_profile
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
