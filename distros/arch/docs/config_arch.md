@@ -28,7 +28,11 @@ sudo pacman -Syu --noconfirm gnome gnome-extra
 pacman -Syyu  // Update arch
 sudo systemctl enable gdm
 sudo reboot
-// Install google-chrome AUR
+
+// Chrome (if gnome or other UI is installed)
+1. Install google-chrome AUR
+2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
+3. In Chrome "Adavanced Font Settings", chosse Script as "Simplified Han", and select Standard as "Source Han Sans CN"
 
 // Install tmux-bash-completion AUR
 
