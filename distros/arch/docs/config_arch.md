@@ -53,14 +53,19 @@ sudo pacman -Syu ttf-libertion  // Fix problem that the char in terminal overlap
 sudo reboot
 ```
 
-After reboot, in the terminal preference, use any "monospace" font.
+- After reboot, in the terminal preference, use any "monospace" font.
 
 #### Pin app to taskbar
+
 1. Right click on the panel and select "Add/Remove panel items".
 2. Select "Application Launch Bar" in "panel applets" sub menu and click "Add".
 3. This pops up a window with options to select items from. Again select "Application Launch Bar" from the options and click "Add".
 4. This adds a blank "application launch bar" generally at the right end of the panel. Now click on the blank 'application launch bar". This gives you the options to assign the "blank launch bar" to your desired application from the application menu. You can add multiple applications to the same "application launch menu".
 
+#### Taskbar applet
+
+- "Resource monitors" can be a good replacement for the default "CPU monitor". After enable it, open the setting and enable the "Display RAM usage", and change the CPU usage color to "#228B22".
+- "Temperatur monitor" is also good and not in default UI.
 ### Option 2: GNOME
 
 ```sudo pacman -Syu --noconfirm gnome gnome-extra
