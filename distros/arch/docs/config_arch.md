@@ -27,6 +27,8 @@ source /usr/share/fzf/completion.bash
   */
 pacman -S cscope
 // Then follow the arch doc for vim+cscope to set up.
+
+// Install tmux-bash-completion AUR
 ```
 
 ## Create user account
@@ -65,7 +67,8 @@ Open preference for terminal, in the existing profile, in Command tab, check "Ru
 
 ### Desktop Apps
 
-// gnome Chrome (if gnome or other UI is installed)
+#### Chrome 
+
 1. Install google-chrome AUR
 2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
 3. sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese
@@ -81,7 +84,6 @@ export XMODIFIERS=@im=fcitx
 4. Launch Fcitx Config GUI from contrl center, add Google Pinyin.
 5. Enjoy (Ctrl + Space is to switch input)
 
-// Install tmux-bash-completion AUR
 
 // gnome AndroidStudio
 1. Install android-studio AUR
