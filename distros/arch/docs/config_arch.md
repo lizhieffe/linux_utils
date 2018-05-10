@@ -1,16 +1,6 @@
-## Must do after fresh install
+# Must do after fresh install
 
-### Create user account
-
-1. First login as root
-2. Create new user account: `useradd -m USER_NAME`
-3. Create password: `passwd USER_NAME`
-4. Give permission: `visudo -f /etc/sudoers` and add this line `USER_NAME ALL=(ALL) ALL`
-5. Exit root login by `exit` and login as new user.
-
-See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](https://wiki.archlinux.org/index.php/sudo) doc for more details.
-
-### Install softwares
+## Install softwares
 
 ```
 systemctl enable dhcpcd.service   # enable wired network connection on bootup
@@ -24,14 +14,56 @@ pacman -S git bash-completion openssh wget the_silver_searcher
 // c/c++ tools
 pacman -S ctags cscope
 
-// gnome
-sudo pacman -Syu --noconfirm gnome gnome-extra
+/ *
+  * fzf
+  */
+pacman -Syu fzf
+// Add these in the .bash_profile
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+
+/ *
+  * cscope
+  */
+pacman -S cscope
+// Then follow the arch doc for vim+cscope to set up.
+```
+
+## Create user account
+
+1. First login as root
+2. Create new user account: `useradd -m USER_NAME`
+3. Create password: `passwd USER_NAME`
+4. Give permission: `visudo -f /etc/sudoers` and add this line `USER_NAME ALL=(ALL) ALL`
+5. Exit root login by `exit` and login as new user.
+
+See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](https://wiki.archlinux.org/index.php/sudo) doc for more details.
+
+## Install Desktop
+
+### Option 1: LXDE (lightweight)
+
+```
+sudo pacman -Syu lxde lxdm
+sudo systemctl enable lxdm
+sudo sed -i /etc/lxdm/lxdm.conf -e 's;^# session=/usr/bin/startlxde;session=/usr/bin/startlxde;g'
+sudo pacman -Syu ttf-libertion  // Fix problem that the char in terminal overlap
+sudo reboot
+```
+
+After reboot, in the terminal preference, use any "monospace" font.
+
+### Option 2: GNOME
+
+```sudo pacman -Syu --noconfirm gnome gnome-extra
 pacman -Syyu  // Update arch
 sudo systemctl enable gdm
 sudo reboot
+```
 
-// gnome terminal
 Open preference for terminal, in the existing profile, in Command tab, check "Run command as a login shell", so that the .bash_profile will be loaded when opening new terminal.
+
+### Desktop Apps
 
 // gnome Chrome (if gnome or other UI is installed)
 1. Install google-chrome AUR
@@ -55,20 +87,3 @@ export XMODIFIERS=@im=fcitx
 1. Install android-studio AUR
 2. pacman -Syu android-tools android-udev  // adb and other tools
 3. The AndroidStudio has SDK manager to automatically download SDK API for you.
-
-/ *
-  * fzf
-  */
-pacman -Syu fzf
-// Add these in the .bash_profile
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-
-/ *
-  * cscope
-  */
-pacman -S cscope
-// Then follow the arch doc for vim+cscope to set up.
-
-```
-```
