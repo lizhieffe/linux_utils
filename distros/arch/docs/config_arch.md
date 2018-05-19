@@ -88,9 +88,13 @@ Open preference for terminal, in the existing profile, in Command tab, check "Ru
 // gnome Chinese Input
 1. sudo pacman -Syu fcitx fcitx-googlepinyin fcitx-im fcitx-configtool
 2. Edit ~/.xprofile
+
+```
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+```
+
 3. Logout and then login
 4. Launch Fcitx Config GUI from contrl center, add Google Pinyin.
 5. Enjoy (Ctrl + Space is to switch input)
