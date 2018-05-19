@@ -81,13 +81,13 @@ Open preference for terminal, in the existing profile, in Command tab, check "Ru
 #### Chrome 
 
 1. Install google-chrome AUR
-2. pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character
-3. sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese
+2. `pacman -Syu adobe-source-han-sans-cn-fonts ttf-droid  // Chinese character`
+3. `sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese`
 4. In Chrome setting "Customize fonts" page, select "Source Han Sans CN" for all fonts.
 
 // gnome Chinese Input
-1. sudo pacman -Syu fcitx fcitx-googlepinyin fcitx-im fcitx-configtool
-2. Edit ~/.xprofile
+1. `sudo pacman -Syu fcitx fcitx-googlepinyin fcitx-im fcitx-configtool`
+2. (No need for LXDE desktop env) Edit ~/.xprofile
 
 ```
 export GTK_IM_MODULE=fcitx
@@ -102,5 +102,5 @@ export XMODIFIERS=@im=fcitx
 
 // gnome AndroidStudio
 1. Install android-studio AUR
-2. pacman -Syu android-tools android-udev  // adb and other tools
+2. `pacman -Syu android-tools android-udev  // adb and other tools`
 3. The AndroidStudio has SDK manager to automatically download SDK API for you.
