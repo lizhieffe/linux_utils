@@ -35,3 +35,6 @@ set -o vi
 
 # Load more settings from .bashrc
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+# RPI cross-compiling toolchain. See https://www.raspberrypi.org/documentation/linux/kernel/building.md
+export PATH=$PATH:$HOME/installed/rpi_toolchain/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
