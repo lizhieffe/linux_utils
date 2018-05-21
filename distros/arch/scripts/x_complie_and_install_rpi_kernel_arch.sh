@@ -20,10 +20,10 @@ CORES=`getconf _NPROCESSORS_ONLN`
 SD_CARD=sdd
 MOUNT_DIR="/tmp/rpi_mnt/"
 
-if [ -e "/dev/$SD_CARD1" ] && [ -e "/dev/$SD_CARD2" ] && [ -e "/dev/$SD_CARD5" ] && [ -e "/dev/$SD_CARD6" ] && [ -e "/dev/$SD_CARD7" ]; then
+if [ -e "/dev/${SD_CARD}1" ] && [ -e "/dev/${SD_CARD}2" ] && [ -e "/dev/${SD_CARD}5" ] && [ -e "/dev/${SD_CARD}6" ] && [ -e "/dev/${SD_CARD}7" ]; then
   echo "Find SD card on $SD_CARD"
 else
-  echo "Error: no SD card is found on $SD_CARD, please use `lsblk` command to check if the device exists."
+  echo "Error: no SD card is found on $SD_CARD, please use 'lsblk' command to check if the device exists."
   exit
 fi
 
