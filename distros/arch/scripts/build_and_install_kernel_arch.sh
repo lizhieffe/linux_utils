@@ -15,8 +15,6 @@ CORES=`getconf _NPROCESSORS_ONLN`
 echo "Going to kernel directory: ${KERNEL_DIR}"
 cd "$KERNEL_DIR"
 
-# git checkout v4.15
-
 if [ "$#" -ne 1 ] && [ "$1" = "-c" ]; then
 	echo "Cleaning env..."
 	make clean
