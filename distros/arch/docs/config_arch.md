@@ -43,6 +43,103 @@ See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](htt
 
 ## Install Desktop
 
+### Option 0: i3 (lightweight)
+
+- Install i3 `pacman -S i3 dmenu xorg xorg-xinit`.
+- Tell Xorg to run i3 after it’s start. To do that, we will edit this file: `vim ~/.xinitrc` to this:
+
+```
+#! /bin/bash
+exec i3
+```
+
+- One can then start i3 by `startx`. To quit i3, press Windows+Shift+E.
+- To start i3 (startx) after logging in after boot, `vim /etc/profile` and add there this:
+
+```
+# autostart systemd default session on tty1
+if [[ "$(tty)" == '/dev/tty1' ]]; then
+    exec startx
+fi
+```
+
+- Install terminal `pacman -S rxvt-unicode rxvt-unicode-terminfo`
+- Config terminal `vim ~/.Xdefaults`, and add
+
+```
+! urxvt
+
+URxvt*geometry:                115x40
+!URxvt*font: xft:Liberation Mono:pixelsize=14:antialias=false:hinting=true
+URxvt*font: xft:Inconsolata:pixelsize=17:antialias=true:hinting=true
+URxvt*boldFont: xft:Inconsolata:bold:pixelsize=17:antialias=false:hinting=true
+!URxvt*boldFont: xft:Liberation Mono:bold:pixelsize=14:antialias=false:hinting=true
+URxvt*depth:                24
+URxvt*borderless: 1
+URxvt*scrollBar:            false
+URxvt*saveLines:  2000
+URxvt.transparent:      true
+URxvt*.shading: 10
+
+! Meta modifier for keybindings
+!URxvt.modifier: super
+
+!! perl extensions
+URxvt.perl-ext:             default,url-select,clipboard
+
+! url-select (part of urxvt-perls package)
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.url-select.autocopy:  true
+URxvt.url-select.button:    2
+URxvt.url-select.launcher:  chromium
+URxvt.url-select.underline: true
+
+! Nastavuje kopirovani
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+
+! disable the stupid ctrl+shift 'feature'
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+!urxvt color scheme:
+
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
+
+URxvt*colorUL: #86a2b0
+
+! black
+URxvt*color0  : #2E3436
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+URxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #3465A4
+URxvt*color12 : #729FCF
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #06989A
+URxvt*color14 : #34E2E2
+! white
+URxvt*color7  : #D3D7CF
+```
+
+
+#### Tips
+
+- To switch from i3 to "raw" commandline window, press CTRL+ALT+[F2~F7].
+- In i3bar, to run a executable, press WIN+d, and input the name. E.g., for terminal, enter "urxvt" as name.
+
 ### Option 1: LXDE (lightweight)
 
 ```
