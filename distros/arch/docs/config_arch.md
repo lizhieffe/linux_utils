@@ -65,6 +65,11 @@ fi
 
 - Install terminal `pacman -S rxvt-unicode rxvt-unicode-terminfo`
 
+
+#### Tips
+
+- To switch from i3 to "raw" commandline window, press CTRL+ALT+[F2~F7].
+
 ### Option 1: LXDE (lightweight)
 
 ```
