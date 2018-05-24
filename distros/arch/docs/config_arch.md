@@ -43,6 +43,28 @@ See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](htt
 
 ## Install Desktop
 
+### Option 0: i3 (lightweight)
+
+- Install i3 `pacman -S i3 dmenu xorg xorg-xinit`.
+- Tell Xorg to run i3 after it’s start. To do that, we will edit this file: `vim ~/.xinitrc` to this:
+
+```
+#! /bin/bash
+exec i3
+```
+
+- One can then start i3 by `startx`. To quit i3, press Windows+Shift+E.
+- To start i3 (startx) after logging in after boot, `vim /etc/profile` and add there this:
+
+```
+# autostart systemd default session on tty1
+if [[ "$(tty)" == '/dev/tty1' ]]; then
+    exec startx
+fi
+```
+
+- Install terminal `pacman -S rxvt-unicode rxvt-unicode-terminfo`
+
 ### Option 1: LXDE (lightweight)
 
 ```
