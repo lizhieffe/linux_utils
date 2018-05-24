@@ -69,6 +69,7 @@ fi
 #### Tips
 
 - To switch from i3 to "raw" commandline window, press CTRL+ALT+[F2~F7].
+- In i3bar, to run a executable, press WIN+d, and input the name. E.g., for terminal, enter "urxvt" as name.
 
 ### Option 1: LXDE (lightweight)
 
