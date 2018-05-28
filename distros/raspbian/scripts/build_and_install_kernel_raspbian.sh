@@ -1,6 +1,7 @@
 #/bin/sh
 
 # Script to build and install linux kernel for Raspbian linux.
+# See this file for details: https://www.raspberrypi.org/documentation/linux/kernel/building.md
 
 # Exit on error.
 set -e
