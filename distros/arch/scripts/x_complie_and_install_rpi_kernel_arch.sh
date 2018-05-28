@@ -22,6 +22,8 @@ while getopts ":ad" opt; do
       ;;
     d ) # compile device tree only
       COMPILE_DT_ONLY=true
+      echo "ERROR: the script has issue to compile Device Tree (DT) only."
+      exit
       ;;
     \? ) echo "$USAGE_VERBOSE"
       exit
@@ -45,19 +47,41 @@ else
 fi
 echo "Will compile and install $TARGET_VERBOSE_NAME"
 
+echo "Type the device name for the SD card containing RPI (you can use lsblk to find it out."
+read SD_CARD
+
+echo "Type the boot partition number (fat32). For Noob, it is 6; for plain Raspbian, it is 1."
+read BOOT_PARTITION
+if [ -e "/dev/${SD_CARD}${BOOT_PARTITION}" ]; then
+  #TODO: improve this
+  echo
+else
+  echo "ERROR: the boot partition should either be 6 or 1."
+  exit
+fi
+
+echo "Type the system partition number (ext4). For Noob, it is 7; for plain Raspbian, it is 2."
+read SYSTEM_PARTITION
+if [ -e "/dev/${SD_CARD}${SYSTEM_PARTITION}" ]; then
+  #TODO: improve this
+  echo
+else
+  echo "ERROR: the system partition should either be 7 or 2."
+  exit
+fi
+
 KERNEL=kernel7
 KERNEL_DIR="$HOME/development/rpi_linux"
 CONFIG_FILE=".config"
 CORES=`getconf _NPROCESSORS_ONLN`
-SD_CARD=sdd
 MOUNT_DIR="/tmp/rpi_mnt"
 
-if [ -e "/dev/${SD_CARD}1" ] && [ -e "/dev/${SD_CARD}2" ] && [ -e "/dev/${SD_CARD}5" ] && [ -e "/dev/${SD_CARD}6" ] && [ -e "/dev/${SD_CARD}7" ]; then
-  echo "Find SD card on $SD_CARD"
-else
-  echo "Error: no SD card is found on $SD_CARD, please use 'lsblk' command to check if the device exists."
-  exit
-fi
+# if [ -e "/dev/${SD_CARD}1" ] && [ -e "/dev/${SD_CARD}2" ] && [ -e "/dev/${SD_CARD}5" ] && [ -e "/dev/${SD_CARD}6" ] && [ -e "/dev/${SD_CARD}7" ]; then
+#   echo "Find SD card on $SD_CARD"
+# else
+#   echo "Error: no SD card is found on $SD_CARD, please use 'lsblk' command to check if the device exists."
+#   exit
+# fi
 
 echo "Going to kernel directory: ${KERNEL_DIR}"
 cd "$KERNEL_DIR"
@@ -88,8 +112,8 @@ fi
 mkdir "$MOUNT_DIR"
 mkdir "$MOUNT_DIR"/fat32
 mkdir "$MOUNT_DIR"/ext4
-sudo mount /dev/"$SD_CARD"6 "$MOUNT_DIR"/fat32
-sudo mount /dev/"$SD_CARD"7 "$MOUNT_DIR"/ext4
+sudo mount /dev/"$SD_CARD$BOOT_PARTITION" "$MOUNT_DIR"/fat32
+sudo mount /dev/"$SD_CARD$SYSTEM_PARTITION" "$MOUNT_DIR"/ext4
 
 if [ "$COMPILE_ALL" = true ]; then
   echo "Compiling and installing the modules with using ${CORES} cores..."
@@ -107,7 +131,9 @@ sudo cp arch/arm/boot/dts/overlays/README "$MOUNT_DIR"/fat32/overlays/
 sudo umount "$MOUNT_DIR"/fat32
 sudo umount "$MOUNT_DIR"/ext4
 
-echo "Ejecting the SD card $SD_CARD"
-udisksctl power-off -b /dev/"$SD_CARD"
+# It seems adding this line will move the card reader be ejected and has to be
+# re-pluged in before it can be used. We only want to eject the sd card.
+# echo "Ejecting the SD card $SD_CARD"
+# udisksctl power-off -b /dev/"$SD_CARD"
 
 echo "The $TARGET_VERBOSE_NAME is built and installed to SD card $SD_CARD successfully. Please plug it in your RPI device and restart."
