@@ -6,7 +6,7 @@
 # Exit on error.
 set -e
 
-KERNEL_DIR="/home/lizhieffe/development/linux"
+KERNEL_DIR="$HOME/development/rpi_linux"
 KERNEL="kernel7"
 
 echo "Going to kernel directory: ${KERNEL_DIR}"
