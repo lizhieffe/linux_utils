@@ -182,9 +182,12 @@ Open preference for terminal, in the existing profile, in Command tab, check "Ru
 3. `sudo pacman -S ttf-dejavu  // Fix the square char on Chrome URL field when displaying Chinese`
 4. In Chrome setting "Customize fonts" page, select "Source Han Sans CN" for all fonts.
 
-// gnome Chinese Input
+#### gnome Chinese Input
 1. `sudo pacman -Syu fcitx fcitx-googlepinyin fcitx-im fcitx-configtool`
-2. (No need for LXDE desktop env) Edit ~/.xprofile
+2. 
+- For i3wm, edit ~/.xinitrc
+- For LXDE, no need to do this
+- Otherwise edit ~/.xprofile
 
 ```
 export GTK_IM_MODULE=fcitx
