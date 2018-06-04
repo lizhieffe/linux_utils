@@ -204,3 +204,23 @@ export XMODIFIERS=@im=fcitx
 1. Install android-studio AUR
 2. `pacman -Syu android-tools android-udev  // adb and other tools`
 3. The AndroidStudio has SDK manager to automatically download SDK API for you.
+
+### Audio
+
+By default, alsa is installed together with kernel. By installing alsa-util
+which provides a graphic interface to control the audio:
+
+```
+sudo pacman -S alsa-util
+
+alsamixter  // start graphic interface to control the audio
+```
+
+If no audio, try following
+1. Use 'alsamixter' to check if the output audio level is set correctly.
+2. If still no sound, try run the following:
+
+```
+sudo pacman -S alsa-util  // reinstall alsa-util
+alsactl restore
+```
