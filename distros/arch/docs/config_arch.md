@@ -211,7 +211,7 @@ By default, alsa is installed together with kernel. By installing alsa-util
 which provides a graphic interface to control the audio:
 
 ```
-sudo pacman -S alsa-util
+sudo pacman -S alsa-utils
 
 alsamixter  // start graphic interface to control the audio
 ```
@@ -221,6 +221,6 @@ If no audio, try following
 2. If still no sound, try run the following:
 
 ```
-sudo pacman -S alsa-util  // reinstall alsa-util
+sudo pacman -S alsa-utils  // reinstall alsa-util
 alsactl restore
 ```
