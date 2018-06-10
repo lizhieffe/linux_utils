@@ -1,6 +1,6 @@
 #/bin/sh
 
-BASE_DIR="~/source"
+BASE_DIR="$HOME/source"
 # Create dir if not exist.
 mkdir -p "$BASE_DIR"
 
