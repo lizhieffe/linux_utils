@@ -1,3 +1,5 @@
+The board mentioned in this doc is Wandboard QuadPlus rev D1
+
 Follow this doc: https://archlinuxarm.org/platforms/armv7/freescale/wandboard
 
 Note:
