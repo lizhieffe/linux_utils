@@ -41,6 +41,15 @@ pacman -S cscope
 
 See [this](https://wiki.archlinux.org/index.php/Users_and_groups) and [this](https://wiki.archlinux.org/index.php/sudo) doc for more details.
 
+## Spead up makepkg
+
+```
+sudo vi /etc/makepkg.conf
+
+EDIT THIS LINE
+MAKEFLAGS="-j$(nproc)"
+```
+
 ## Install Desktop
 
 ### Option 0: i3 (lightweight)
