@@ -1,1 +1,9 @@
 *.swp
+
+*.out
+
+*.o
+
+perf.data
+
+perf.data.*
