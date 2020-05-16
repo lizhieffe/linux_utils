@@ -4,13 +4,11 @@
 #include <memory>
 #include <string>
 
+#include "shared_lib.h"
+
 using ::std::cout;
 using ::std::endl;
 using ::std::string;
-
-void InitString() {
-  std::unique_ptr<string> s = std::make_unique<string>("abcd");
-}
 
 int main() {
   while (true) {

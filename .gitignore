@@ -4,6 +4,8 @@
 
 *.o
 
+*.so
+
 perf.data
 
 perf.data.*
