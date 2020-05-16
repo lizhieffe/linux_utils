@@ -35,15 +35,16 @@ Run the sample code which contains a infinite loop
 SHARED_LIB=shared_lib.so
 OUTPUT=perf_test.out
 
-g++ -std=c++14 -shared -o ${SHARED_LIB} -fPIC shared_lib.cc
+g++ -std=c++14 -shared -fvisibility=hidden -o ${SHARED_LIB} -fPIC shared_lib.cc
 g++ -std=c++14 main.cc -o ${OUTPUT} -L. shared_lib.so
 ./${OUTPUT}
 ```
 
 Get the code's PID and run the commands to record cpu-clock in call stack fashion and read result:
 
-- Note that a.out is not stripped, thus the report will contain detailed function name
-- For stripped a.out (`strip a.out`), the function name will not be displayed, instead fn address is displayed and not readible
+- Note that a.out is not stripped, thus the report will contain detailed function (symbols) name
+- For stripped a.out (`strip a.out`), the function name will not be displayed, instead hex fn
+  address is displayed and not readible
 
 
 ```
