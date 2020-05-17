@@ -16,6 +16,7 @@ int main() {
 
   while (true) {
     InitString();
+    MmapSampleFile();
     ReadSampleFile();
   }
   cout<<"job finished." << endl;
