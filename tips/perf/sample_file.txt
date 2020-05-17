@@ -1,0 +1,208 @@
+Trifling
+BlogAboutSubscribe
+Hiding what's exposed in a shared library
+BY: MIKE HEFFNER | POSTED: AUGUST 19TH, 2009
+This post will illustrate how to hide what gets exposed when you distribute a shared library. Specifically we will focus on hiding all unnecessary symbol names in your distributed shared library.
+
+What are we talking about?
+So what are we talking about when we say we’d like to hide the internals of a library? Let’s take a very simple example to illustrate what can be exposed from a shared library. For our example we have built a very small library that we name “libab” and which provides a single API call, ab_get_string as seen in the library include file:
+
+/* ab.h -- External API for libab. */
+#ifndef __AB_H__
+#define  __AB_H__
+
+const char *ab_get_string(void);
+
+#endif /* ! __AB_H__ */
+view rawab.h hosted with ❤ by GitHub
+This call will return a single string value. To see what this string actually contains we must take a look at the library source. Being the good software engineers that we are, we’ve broken this library into two separate components located in files filea.c and fileb.c:
+
+/* filea.c */
+#include <stdio.h>
+
+/* Include public API definitions. */
+#include "ab.h"
+
+/* Function provided by fileb.c */
+int b_getval_super_secret(void);
+
+/* Simple function internal to this file only. */
+static int
+a_internal_getval(void)
+{
+
+	return 3;
+}
+
+/* Exported API function. */
+const char *
+ab_get_string(void)
+{
+	static char buf[64];
+
+	snprintf(buf, sizeof(buf), "A val: %d, B val: %d",
+		 a_internal_getval(),
+		 b_getval_super_secret());
+
+	return buf;
+}
+view rawfilea.c hosted with ❤ by GitHub
+/* fileb.c */
+
+/* Internal to this file. */
+static int
+b_internal_getval(void)
+{
+
+	return 4;
+}
+
+/* Exported to filea.c, but not outside of library. Function's name
+ * intended to expose valuable IP.
+ */
+int
+b_getval_super_secret(void)
+{
+
+	return b_internal_getval() + 1;
+}
+view rawfileb.c hosted with ❤ by GitHub
+As you can see, the ab_get_string function returns a string containing two integer values “A” and “B”. The value for “A” is obtained from an internal function in A and the value for “B” is returned from the function b_getval_super_secret in fileb.c – which later calls an internal function in B. The “internal” functions in filea.c and fileb.c are both defined as static since their scope is limited to the same file. However, b_getval_super_secret can not be declared static as it must be accessible from filea.c.
+
+Let’s build the library and see what symbols are exposed:
+
+$ make
+gcc -Wall -fPIC   -c -o test.o test.c
+gcc -Wall -fPIC   -c -o filea.o filea.c
+gcc -Wall -fPIC   -c -o fileb.o fileb.c
+gcc -shared -o libab.so filea.o fileb.o
+gcc -o test test.o -L. -lab
+
+$ objdump -t libab.so | grep get
+00000000000005dc l     F .text  000000000000000b              a_internal_getval
+0000000000000634 l     F .text  000000000000000b              b_internal_getval
+000000000000063f g     F .text  000000000000000e              b_getval_super_secret
+00000000000005e7 g     F .text  000000000000004a              ab_get_string
+view rawout.txt hosted with ❤ by GitHub
+So at first look all four function names are exposed in the symbol table of the library, including the static functions, intra-library functions, and the exposed API functions. Before we investigate how to hide some of these symbols, let’s explore why we would want to hide anything.
+
+Why Hide?
+For most shared libraries that are distributed, you won’t mind if some amount of visibility into the library is exposed. The library itself may be openly built from free/open source code or there may simply be no pressing desire to hide the internals of a library.
+
+However, there are also many cases when you do want to hide the internals as much as possible. For example, if there were significant Intellectual Property contained in the library, then internal symbol names may expose some amount of that IP. You may also want to hide internal functionality to prevent unintended use. For example, if a library exposed a symbol named perform_operation_foobar a curious programmer may believe they can directly invoke this function to perform operation “foobar”, even if the function were not exposed in the header file. If the symbol had unintended consequences if invoked directly, the enterprising programmer might hassle the company support system despite having operated outside of the recommended box. Additionally, future versions of the library may remove or change the interfaces the programmer was not supposed to be depending on.
+
+In any case, let’s see what we can do to limit the unintended exposure.
+
+The strip command
+The strip command will pull out components from an object file, including symbols and debugging segments. Let’s perform a basic strip of our library to see how much we can pull out:
+
+$ strip --strip-all --discard-all libab.so 
+
+$ objdump -t libab.so           
+
+libab.so:     file format elf64-x86-64
+
+SYMBOL TABLE:
+no symbols
+
+
+$ objdump -T libab.so | grep get
+000000000000063f g    DF .text          000000000000000e  Base        b_getval_super_secret
+00000000000005e7 g    DF .text          000000000000004a  Base        ab_get_string
+view rawout.txt hosted with ❤ by GitHub
+As you can see, the strip command has removed the symbol table from the shared library. This removed the exposure of the “internal” static functions from the file. Clearly, any function symbol that does not need to be exposed outside of the file it’s in should be declared static. However, the dynamic symbol table still exists and contains a reference to b_getval_super_secret contained in fileb.c. Wait a minute, there are two symbol tables?
+
+ELF files contain two symbol tables: the .symtab table and the .dynsym table (or dynamic symbol table). In simple terms, the symtab table contains all local and global symbol names primarily for the purpose of debugging capabilities. When you load GDB and inspect a backtrace, it will use this symbol table to print the names of the function symbols in the backtrace. Otherwise, without this the backtrace would only include hex address offsets in the file. The dynsym table contains the list of global symbols that are required for run-time dynamic linking and hence can not be removed. The dynamic linker will check this section to find symbols required by an executable. For a full explanation of the ELF symbol tables, please read 1.
+
+So we have removed our internal function names from the file, however, can we do better?
+
+Defining visibility
+We can’t define the b_getval_super_secret function static because we must be able to access it from filea.c. Fortunately, we can use the symbol visibility option. The -fvisibility= option allows us to define the visibility for all exported symbols from the library. The option supports four modes, but we’ll limit our discussion to the two practical ones default and hidden. The default visibility mode exports all global symbols from the library, making them available in the dynamic symbol table. Obviously, if the -fvisibility= option is not specified, the default is default. On the other hand, the hidden option will not export any symbol that is not explicitly marked otherwise (more later).
+
+Let’s try switching the visibility to hidden in our build:
+
+$ make libab.so
+gcc -Wall -fPIC -fvisibility=hidden   -c -o filea.o filea.c
+gcc -Wall -fPIC -fvisibility=hidden   -c -o fileb.o fileb.c
+gcc -Wall -fPIC -fvisibility=hidden -shared -o libab.so filea.o fileb.o
+
+$ strip --strip-all --discard-all libab.so 
+
+$ objdump -T libab.so  | grep get
+Exit 1
+
+$ LD_LIBRARY_PATH=. ./test
+./test: symbol lookup error: ./test: undefined symbol: ab_get_string
+view rawout.txt hosted with ❤ by GitHub
+With the -fvisibility=hidden we have been able to remove the b_getval_super_secret symbol from the dynamic symbol table. However, this removed the ab_get_string symbol from the table as well. Since the exported API symbol does not exist in the dynamic symbol table anymore, our test program fails to run with an undefined symbol error. How can we hide the internal global symbols, but still export the API symbols?
+
+Defining per-symbol visibility
+Luckily, we can also define symbol visibility at the per-symbol granularity. GCC supports the visibility attribute that we can use to annotate our functions with their appropriate visibility. Since we want the ab_get_string symbol to have global visibility, let’s define it to have default visibility. We’ll update filea.c to use the attribute:
+
+/* filea.c */
+#include <stdio.h>
+
+/* Include public API definitions. */
+#include "ab.h"
+
+/* Function provided by fileb.c */
+int b_getval_super_secret(void);
+
+/* Simple function internal to this file only. */
+static int
+a_internal_getval(void)
+{
+
+	return 3;
+}
+
+/* Exported API function. */
+const char *ab_get_string(void) __attribute__ ((visibility ("default") ));
+const char *
+ab_get_string(void)
+{
+	static char buf[64];
+
+	snprintf(buf, sizeof(buf), "A val: %d, B val: %d",
+		 a_internal_getval(),
+		 b_getval_super_secret());
+
+	return buf;
+}
+view rawfilea.c hosted with ❤ by GitHub
+We added a function prototype and suffixed it with the default visibility attribute. Let’s see if this works:
+
+$ make libab.so
+gcc -Wall -fPIC -fvisibility=hidden   -c -o filea.o filea.c
+gcc -Wall -fPIC -fvisibility=hidden   -c -o fileb.o fileb.c
+gcc -Wall -fPIC -fvisibility=hidden -shared -o libab.so filea.o fileb.o
+
+$ strip --strip-all --discard-all libab.so 
+
+$ objdump -T libab.so   | grep get
+0000000000000587 g    DF .text 000000000000004a  Base        ab_get_string
+
+$ LD_LIBRARY_PATH=. ./test 
+String: A val: 3, B val: 5
+view rawout.txt hosted with ❤ by GitHub
+Success! We now have a library that exports only the single API symbol it supports. All other internal symbol names are completely stripped from the binary file.
+
+Concluding Remarks
+We could have just as easily annotated the b_getval_super_secret function with hidden visibility and kept the default visibility as default. However, making the default hidden you guarantee that only functions explicitly defined to have global visibility are exported. If tomorrow we added a function in fileb.c we would have to make sure to also mark it hidden.
+
+You can also use export maps to define exported symbols in a map file that is parsed by the linker. See [2] for more information.
+
+Reducing the number of symbols in the dynamic symbol table can also improve performance and runtime. The larger the table the more entries the dynamic linker must load and search through.
+
+I suggest reading [2] for a full explanation of symbol visibility and all possible options.
+
+Reference
+[1] Bahrami, Ali. Inside ELF Symbol Tables. http://blogs.sun.com/ali/entry/inside_elf_symbol_tables
+
+[2] Drepper, Ulrich. How to Write Shared Libraries. http://people.redhat.com/drepper/dsohowto.pdf
+
+
+Twitter @mheffner
+Fetching tweets...
+Copyright © 2011 - Trifling - Powered by Octopress
+

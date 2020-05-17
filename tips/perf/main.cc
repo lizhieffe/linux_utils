@@ -11,8 +11,12 @@ using ::std::endl;
 using ::std::string;
 
 int main() {
+  std::cout << "Please start 'perf' in another window and Enter to continue...";
+  std::cin.get();
+
   while (true) {
     InitString();
+    ReadSampleFile();
   }
   cout<<"job finished." << endl;
   return 0;

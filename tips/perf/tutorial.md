@@ -50,7 +50,7 @@ Get the code's PID and run the commands to record cpu-clock in call stack fashio
 ```
 OUTPUT=perf_test.out
 
-sudo perf record -F 99 -ag -e cpu-clock --call-graph dwarf -p `pgrep ${OUTPUT}`
+sudo perf record -F 99 -ag -e cpu-clock,page-faults,block:block_rq_issue,major-faults,minor-faults --call-graph dwarf -p `pgrep ${OUTPUT}`
 
-sudo perf report --stdio
+sudo perf report
 ```
