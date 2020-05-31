@@ -54,3 +54,7 @@ sudo perf record -F 99 -ag -e cpu-clock,page-faults,block:block_rq_issue,major-f
 
 sudo perf report
 ```
+
+##  Memory Profiling
+
+TODO: here is a [tutorial](http://www.brendangregg.com/FlameGraphs/memoryflamegraphs.html)
