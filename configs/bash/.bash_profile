@@ -1,4 +1,4 @@
- export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[33;1m\]\w\[\033[m\]\$ "                                                                                                                                            
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[33;1m\]\w\[\033[m\]\$ "                                                                                                                                            
 
 export CLICOLOR=1
 export LSCOLORS=gxfxaxdxcxegedabagacad
@@ -40,3 +40,33 @@ set -o vi
 export PATH=$PATH:$HOME/installed/rpi_toolchain/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
 
 alias sudo='sudo '
+
+## 
+# -----------------------------------------------------------------------------
+# General Settings
+# -----------------------------------------------------------------------------
+
+# Change prefix from 'Ctrl+B' to 'Ctrl+A' (easier to reach)
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
+# Enable mouse control (clickable windows, panes, resizable panes)
+set -g mouse on
+
+# Start window and pane numbering at 1 (instead of 0)
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Automatically renumber windows when one is closed
+set -g renumber-windows on
+
+# Increase scrollback buffer size
+set -g history-limit 10000
+
+# -----------------------------------------------------------------------------
+# tmux
+# -----------------------------------------------------------------------------
+# Fix color scheme for tmux
+alias tmux='tmux -2'  # for 256color
+alias tmx='tmux'
