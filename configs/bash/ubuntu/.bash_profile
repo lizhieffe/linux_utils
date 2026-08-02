@@ -1,3 +1,9 @@
+# Source .bashrc so login shells (new terminals, SSH sessions) pick up
+# the same config as non-login shells (e.g. conda's init block).
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
 export PS1="\[\033[36m\]\h\[\033[m\]@\[\033[33;1m\]\w\[\033[m\]\$ "                                                                                                                                            
 
 export CLICOLOR=1
