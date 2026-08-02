@@ -1,7 +1,10 @@
 # Source .bashrc so login shells (new terminals, SSH sessions) pick up
 # the same config as non-login shells (e.g. conda's init block).
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+# Guarded because .bashrc also sources .bash_profile back (see below);
+# without the guard the two files source each other forever.
+if [ -z "$_BASH_PROFILE_SOURCED" ]; then
+    _BASH_PROFILE_SOURCED=1
+    [ -f ~/.bashrc ] && . ~/.bashrc
 fi
 
 export PS1="\[\033[36m\]\h\[\033[m\]@\[\033[33;1m\]\w\[\033[m\]\$ "                                                                                                                                            
