@@ -1,52 +1,5 @@
-# Source .bashrc so login shells (new terminals, SSH sessions) pick up
-# the same config as non-login shells (e.g. conda's init block).
-# Guarded because .bashrc also sources .bash_profile back (see below);
-# without the guard the two files source each other forever.
-if [ -z "$_BASH_PROFILE_SOURCED" ]; then
-    _BASH_PROFILE_SOURCED=1
-    [ -f ~/.bashrc ] && . ~/.bashrc
-fi
-
-export PS1="\[\033[36m\]\h\[\033[m\]@\[\033[33;1m\]\w\[\033[m\]\$ "                                                                                                                                            
-
-export CLICOLOR=1
-export LSCOLORS=gxfxaxdxcxegedabagacad
-
-alias grep='grep --color'
-alias egrep='egrep --color'
-alias fgrep='fgrep --color'
-
-alias ls='ls -aGFh'
-alias ll='ls -alGFh'
-
-alias vi='vim'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
-export PATH=$PATH:~/scripts
-
-# Use Sublime Text as the default editor.
-export EDITOR="subl -w"
-
-# Add binaries installed via Homebrew to our PATH.
-export PATH=$HOME/homebrew/bin:$HOME/development/linux_utils/scripts:$HOME/development/linux_utils/distros/arch/scripts:$PATH
-
-# Create and enter a directory
-function mkcd () { mkdir -p "$@" && cd "$@"; }
-
-# VIM input style in bash terminal 
-set -o vi
-
-
-alias sudo='sudo '
-
-# -----------------------------------------------------------------------------
-# tmux aliases
-# -----------------------------------------------------------------------------
-alias tmux='tmux -2'  # for 256color
-alias tmx='tmux'
+# Login shells (new terminals, SSH sessions) don't read .bashrc
+# automatically, so pull it in here. .bashrc holds everything (aliases,
+# PS1, conda init) and does not source this file back, so there's no
+# risk of a sourcing cycle.
+[ -f ~/.bashrc ] && . ~/.bashrc
