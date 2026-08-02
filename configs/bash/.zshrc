@@ -1,4 +1,4 @@
-export PROMPT="%F{cyan}%n%f@%B%F{yellow}%~%f%b$ "
+export PROMPT="%F{cyan}%m%f@%B%F{yellow}%~%f%b$ "
 
 source ~/.shell_common
 
